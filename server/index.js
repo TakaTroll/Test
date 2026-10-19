@@ -568,6 +568,8 @@ function deleteUserData(u, hard) {
 // Express (REST)
 // ---------------------------------------------------------------------------
 const app = express();
+// Behind a hosting proxy (Render, Railway…) use the real client IP for rate limiting.
+if (process.env.TRUST_PROXY) app.set('trust proxy', Number(process.env.TRUST_PROXY) || process.env.TRUST_PROXY);
 app.use(express.json({ limit: '12mb' }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/uploads', express.static(store.UPLOAD_DIR, { maxAge: '7d' }));

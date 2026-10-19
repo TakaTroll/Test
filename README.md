@@ -37,6 +37,21 @@ Optional environment variables:
 | `XP_DATA_DIR` | `./data` | Where the JSON database and uploads are stored |
 | `ANTHROPIC_API_KEY` | – | Lets the AI Playroom assistant use Claude. Without it, the built-in template engine is used, which is free and works offline. |
 
+## Put it online
+
+**Render (free, easiest):**
+1. Sign in at [render.com](https://render.com) with GitHub.
+2. Click **New → Blueprint**, pick this repository and branch, then **Apply**. `render.yaml` sets everything up.
+3. After a few minutes your site is live at `https://xperiences-XXXX.onrender.com`.
+
+The free plan sleeps after about 15 minutes without visitors, and the first visit after that takes around 30 seconds to wake it. The free plan also has no permanent disk, so accounts and messages are wiped whenever the app restarts or redeploys. To keep data, upgrade the service and attach a disk mounted at `/data`, then set `XP_DATA_DIR=/data`.
+
+**Anywhere with Docker** (Railway, Fly.io, a VPS…):
+```bash
+docker build -t xperiences .
+docker run -p 3000:3000 -v xp-data:/data xperiences
+```
+
 ## Tests
 
 ```bash
